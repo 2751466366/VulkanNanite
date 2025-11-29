@@ -296,7 +296,6 @@ public:
         // return bounds.error / (d > camera_znear ? d : camera_znear) * (camera_proj * 0.5f);
     }
 
-    // has problems
     static std::vector<std::vector<int> > PartitionMetis(
         const std::vector<Cluster>& clusters,
         const std::vector<int>& pending,
@@ -304,6 +303,7 @@ public:
         std::vector<std::vector<int> > result;
         std::vector<std::vector<int> > vertices(in_vertices.size());
 
+        // find all cluster that vertices belong to
         for (size_t i = 0; i < pending.size(); ++i)
         {
             const Cluster& cluster = clusters[pending[i]];
@@ -331,6 +331,7 @@ public:
 
         std::vector<std::vector<std::pair<int, int> > > neighbors(pending.size());
 
+        // record adjacency weitht
         for (std::map<std::pair<int, int>, int>::iterator it = adjacency.begin(); it != adjacency.end(); ++it)
         {
             neighbors[it->first.first].push_back(std::make_pair(it->first.second, it->second));
